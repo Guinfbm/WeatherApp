@@ -2,6 +2,7 @@ package com.ifpe.weatherapp
 
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -92,6 +93,9 @@ fun LoginPage(modifier: Modifier = Modifier) {
             Button(
                 onClick = {
                     Toast.makeText(activity, "Login OK!", Toast.LENGTH_LONG).show()
+                    val intent = Intent(activity, MainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    activity.startActivity(intent)
+                    activity.finish() // Fecha MainActivity para não acumular telas
                 },
                 enabled = email.isNotEmpty() && password.isNotEmpty()
             ) {
