@@ -35,6 +35,12 @@
             android:label="@string/title_activity_register"
             android:theme="@style/Theme.WeatherApp"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.nav.BottonNavItem"
+            android:exported="false"
+            android:label="@string/title_activity_botton_nav_item"
+            android:theme="@style/Theme.WeatherApp"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

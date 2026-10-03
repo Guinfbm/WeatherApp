@@ -8,15 +8,24 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -27,133 +36,57 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.ifpe.weatherapp.LoginActivity
+import com.ifpe.weatherapp.ui.HomePage
+import com.ifpe.weatherapp.ui.ListPage
+import com.ifpe.weatherapp.ui.MapPage
+import com.ifpe.weatherapp.ui.nav.BottomNavBar
+import com.ifpe.weatherapp.ui.nav.BottomNavItem
+import com.ifpe.weatherapp.ui.nav.MainNavHost
 import com.ifpe.weatherapp.ui.theme.WeatherAppTheme
 
 class MainActivity : ComponentActivity() {
+
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
             WeatherAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomePage()
-                    ListPage()
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = { Text("Bem-vindo/a!") },
+                            actions = {
+                                IconButton(onClick = { finish() }) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                                        contentDescription = "Localized description"
+                                    )
+                                }
+                            }
+                        )
+                    },
+                    bottomBar = {
+                        val items = listOf(
+                            BottomNavItem.HomeButton,
+                            BottomNavItem.ListButton,
+                            BottomNavItem.MapButton
+                        )
+                        BottomNavBar(navController = navController, items = items)
+                    },
+                    floatingActionButton = {
+                        FloatingActionButton(onClick = { }) {
+                            Icon(Icons.Default.Add, contentDescription = "Adicionar")
+                        }
+                    }
+                ) { innerPadding ->
+                    Box(modifier = Modifier.padding(innerPadding)) {
+                        MainNavHost(navController = navController)
+                    }
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun HomePage(modifier: Modifier = Modifier) {
-
-    val activity = LocalActivity.current as ComponentActivity
-
-    Column(
-        modifier = modifier.fillMaxSize()
-            .background(Color.Blue).wrapContentSize(Alignment.Center),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Home",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = modifier.align(CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
-        Row(
-            modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Button(
-                onClick = {
-                    val intent = Intent(activity, LoginActivity::class.java)
-                    activity.startActivity(intent)
-                    activity.finish() // Fecha MainActivity para não acumular telas
-                },
-            ) {
-                Text("Sair")
-            }
-        }
-    }
-}
-
-@Composable
-
-fun ListPage(modifier: Modifier = Modifier){
-
-    val activity = LocalActivity.current as ComponentActivity
-
-    Column(
-        modifier = modifier.fillMaxSize()
-            .background(Color.Magenta).wrapContentSize(Alignment.Center),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Favoritas",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = modifier.align(CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
-        Row(
-            modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Button(
-                onClick = {
-                    val intent = Intent(activity, LoginActivity::class.java)
-                    activity.startActivity(intent)
-                    activity.finish() // Fecha MainActivity para não acumular telas
-                },
-            ) {
-                Text("Sair")
-            }
-        }
-    }
-}
-
-@Composable
-fun MapPage(modifier: Modifier = Modifier){
-    val activity = LocalActivity.current as ComponentActivity
-
-    Column(
-        modifier = modifier.fillMaxSize()
-            .background(Color.Gray).wrapContentSize(Alignment.Center),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Mapa",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = modifier.align(CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
-        Row(
-            modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Button(
-                onClick = {
-                    val intent = Intent(activity, LoginActivity::class.java)
-                    activity.startActivity(intent)
-                    activity.finish() // Fecha MainActivity para não acumular telas
-                },
-            ) {
-                Text("Sair")
             }
         }
     }
