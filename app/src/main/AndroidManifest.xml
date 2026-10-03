@@ -41,6 +41,12 @@
             android:label="@string/title_activity_botton_nav_item"
             android:theme="@style/Theme.WeatherApp"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.CityDialog"
+            android:exported="false"
+            android:label="@string/title_activity_city_dialog"
+            android:theme="@style/Theme.WeatherApp"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
