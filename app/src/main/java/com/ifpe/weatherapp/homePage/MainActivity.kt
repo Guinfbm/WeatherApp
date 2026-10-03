@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.ifpe.weatherapp.LoginActivity
+import com.ifpe.weatherapp.mainViewModel.MainViewModel
 import com.ifpe.weatherapp.ui.HomePage
 import com.ifpe.weatherapp.ui.ListPage
 import com.ifpe.weatherapp.ui.MapPage
@@ -54,6 +56,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
+            val viewModel: MainViewModel by viewModels()
             WeatherAppTheme {
                 Scaffold(
                     topBar = {
@@ -84,7 +87,11 @@ class MainActivity : ComponentActivity() {
                     }
                 ) { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
-                        MainNavHost(navController = navController)
+                        MainNavHost(
+                            navController = navController,
+                            mainViewModel = viewModel,
+                            mainActivity = this@MainActivity
+                        )
                     }
                 }
             }

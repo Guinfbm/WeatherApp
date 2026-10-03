@@ -21,6 +21,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.ifpe.weatherapp.homePage.MainActivity
+import com.ifpe.weatherapp.mainViewModel.MainViewModel
 import com.ifpe.weatherapp.ui.HomePage
 import com.ifpe.weatherapp.ui.ListPage
 import com.ifpe.weatherapp.ui.MapPage
@@ -81,11 +83,13 @@ fun BottomNavBar(navController: NavHostController, items: List<BottomNavItem>) {
 @Composable
 fun MainNavHost(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    mainViewModel: MainViewModel,
+    mainActivity: MainActivity
 ) {
     NavHost(navController = navController, startDestination = Route.Home) {
-        composable<Route.Home> { HomePage(modifier = modifier) }
-        composable<Route.List> { ListPage(modifier = modifier) }
-        composable<Route.Map> { MapPage(modifier = modifier) }
+        composable<Route.Home> { HomePage(modifier = modifier, viewModel = mainViewModel) }
+        composable<Route.List> { ListPage(modifier = modifier, viewModel = mainViewModel) }
+        composable<Route.Map> { MapPage(modifier = modifier, viewModel = mainViewModel) }
     }
 }

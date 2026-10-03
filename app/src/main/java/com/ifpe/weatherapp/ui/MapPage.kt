@@ -23,9 +23,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ifpe.weatherapp.LoginActivity
+import com.ifpe.weatherapp.mainViewModel.MainViewModel
 
 @Composable
-fun MapPage(modifier: Modifier = Modifier){
+fun MapPage(modifier: Modifier = Modifier,
+            viewModel: MainViewModel = MainViewModel()){
     val activity = LocalActivity.current as ComponentActivity
 
     Column(
